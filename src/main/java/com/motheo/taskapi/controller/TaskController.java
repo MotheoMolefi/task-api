@@ -1,6 +1,7 @@
 package com.motheo.taskapi.controller;
 
 import com.motheo.taskapi.model.Task;
+import com.motheo.taskapi.model.TaskStatus;
 import com.motheo.taskapi.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,10 +31,12 @@ public class TaskController {
     // READ
     // GET /tasks -> READ
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) TaskStatus status) {
+        if (status != null) {
+            return ResponseEntity.ok(taskService.getTasksByStatus(status));
+        }
         return ResponseEntity.ok(taskService.getAllTasks());
     }
-
     // GET /tasks/{id} -> READ (one)
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {

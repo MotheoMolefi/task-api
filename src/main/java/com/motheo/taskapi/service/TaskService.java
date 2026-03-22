@@ -1,6 +1,7 @@
 package com.motheo.taskapi.service;
 
 import com.motheo.taskapi.model.Task;
+import com.motheo.taskapi.model.TaskStatus;
 import com.motheo.taskapi.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,10 @@ public class TaskService {
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
+    }
+
+    public List<Task> getTasksByStatus(TaskStatus status) {
+        return taskRepository.findByStatus(status);
     }
 
     public Optional<Task> getTaskById(Long id) {
