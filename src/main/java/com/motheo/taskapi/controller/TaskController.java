@@ -20,16 +20,14 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    // CREATE
-    // POST /tasks
+    // CREATE new task
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
-    // READ
-    // GET /tasks -> READ
+    // GET all tasks
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks(@RequestParam(required = false) TaskStatus status) {
         if (status != null) {
@@ -37,7 +35,7 @@ public class TaskController {
         }
         return ResponseEntity.ok(taskService.getAllTasks());
     }
-    // GET /tasks/{id} -> READ (one)
+    // GET a single task by its ID
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id)
@@ -46,7 +44,7 @@ public class TaskController {
     }
 
 
-    // UPDATE
+    // UPDATE an existing task
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
         try {
@@ -57,7 +55,7 @@ public class TaskController {
         }
     }
 
-    // DELETE
+    // DELETE a task by its ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
